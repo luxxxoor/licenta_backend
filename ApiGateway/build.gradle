@@ -1,0 +1,19 @@
+plugins {
+	id 'org.springframework.boot' version '2.1.3.RELEASE'
+	id 'java'
+}
+
+apply plugin: 'io.spring.dependency-management'
+
+group = theGroup
+version = theVersion
+sourceCompatibility = theSourceCompatibility
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation project(':api-gateway-api')
+	implementation project(':api-gateway-app')
+}
