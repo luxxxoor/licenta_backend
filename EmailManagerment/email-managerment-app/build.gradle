@@ -1,0 +1,64 @@
+buildscript {
+    repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath "net.ltgt.gradle:gradle-apt-plugin:0.19"
+    }
+}
+
+buildscript {
+    ext {
+        springBootVersion = '2.0.5.RELEASE'
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
+    }
+}
+
+ext {
+    springCloudVersion = 'Finchley.SR2'
+}
+
+apply plugin: 'java'
+apply plugin: 'application'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+apply plugin: 'net.ltgt.apt'
+
+group = theGroup
+version = theVersion
+sourceCompatibility = theSourceCompatibility
+mainClassName = 'com.licenta.emm.EmailManagermentApplication'
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+}
+
+dependencies {
+    compile "com.licenta.emm:email-managerment-api:${version}"
+    compile "com.licenta.usm:user-managerment-api:${usmVersion}"
+    implementation('org.springframework.boot:spring-boot-starter-data-jpa')
+    implementation('org.springframework.boot:spring-boot-starter-data-rest')
+    implementation('org.springframework.boot:spring-boot-starter-web')
+    implementation("org.springframework.boot:spring-boot-starter-actuator")
+    implementation('org.springframework.cloud:spring-cloud-starter-netflix-eureka-client:2.0.2.RELEASE')
+    runtimeOnly('org.springframework.boot:spring-boot-devtools')
+    compile 'org.projectlombok:lombok:1.16.18'
+    apt 'org.projectlombok:lombok:1.16.18'
+    compile group: 'org.postgresql', name: 'postgresql', version: '42.2.2'
+    testImplementation('org.springframework.boot:spring-boot-starter-test')
+    compile group: 'javax.mail', name: 'mail', version: '1.4.7'
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
+}

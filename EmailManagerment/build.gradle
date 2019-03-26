@@ -1,0 +1,33 @@
+buildscript {
+	ext {
+		springBootVersion = '2.0.5.RELEASE'
+	}
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+group = theGroup
+version = theVersion
+sourceCompatibility = theSourceCompatibility
+
+repositories {
+	mavenCentral()
+}
+
+ext {
+	springCloudVersion = 'Finchley.SR1'
+}
+
+dependencies {
+	compile project(':email-managerment-api')
+	compile project(':email-managerment-app')
+}
