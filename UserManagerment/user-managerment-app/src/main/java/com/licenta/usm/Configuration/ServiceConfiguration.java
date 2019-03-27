@@ -1,8 +1,8 @@
 package com.licenta.usm.Configuration;
 
-import com.licenta.usm.Rest.UserData;
 import com.licenta.usm.Service.ManagermentService;
-import com.licenta.usm.Service.UserDataService;
+import com.licenta.usm.Service.AuthenticationService;
+import com.licenta.usm.Service.RegistrationService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -16,7 +16,12 @@ public class ServiceConfiguration {
     }
 
     @Bean
-    public UserDataService userDataService() {
-        return new UserDataService();
+    public AuthenticationService authenticationService() {
+        return new AuthenticationService();
+    }
+
+    @Bean
+    public RegistrationService registrationService() {
+        return new RegistrationService();
     }
 }

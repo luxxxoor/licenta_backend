@@ -1,22 +1,16 @@
 package com.licenta.usm.Rest;
 
-import com.licenta.emm.Exceptions.EmailAlreadyInUse;
-import com.licenta.usm.Domain.ORM.User;
-import com.licenta.usm.Entities.LoginUser;
-import com.licenta.usm.Entities.RegisterUser;
-import com.licenta.usm.Entities.UID;
 import com.licenta.usm.Entities.UserName;
 import com.licenta.usm.Entities.UserPublicDetails;
-import com.licenta.usm.Exceptions.ExistingUserException;
 import com.licenta.usm.Exceptions.UserNotFoundException;
 import com.licenta.usm.Managerment.IUserManagerment;
+import com.licenta.usm.ORM.User;
 import com.licenta.usm.Service.ManagermentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -44,18 +38,6 @@ public class UserManagerment implements IUserManagerment {
         final User user = managermentService.findUser(id);
         UserPublicDetails userPublicDetails = new UserPublicDetails(user.getId(), user.getNickName());
         return new ResponseEntity<>(userPublicDetails, OK);
-    }
-
-    @Override
-    public ResponseEntity<UID> login(@RequestBody final LoginUser loginUser) throws NoSuchAlgorithmException, UserNotFoundException {
-        UID uid = new UID(managermentService.login(loginUser));
-        return new ResponseEntity<>(uid, OK);
-    }
-
-    @Override
-    public ResponseEntity<Void> register(@RequestBody final RegisterUser registerUser) throws NoSuchAlgorithmException, ExistingUserException, EmailAlreadyInUse {
-        managermentService.register(registerUser);
-        return new ResponseEntity<>(OK);
     }
 
     @Override

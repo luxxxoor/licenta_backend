@@ -4,9 +4,6 @@ buildscript {
             url "https://plugins.gradle.org/m2/"
         }
     }
-    dependencies {
-        classpath "net.ltgt.gradle:gradle-apt-plugin:0.21"
-    }
 }
 
 plugins {
@@ -14,7 +11,6 @@ plugins {
 }
 
 apply plugin: 'idea'
-apply plugin: 'net.ltgt.apt'
 apply plugin: 'maven-publish'
 apply plugin: 'io.spring.dependency-management'
 

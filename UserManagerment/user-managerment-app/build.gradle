@@ -4,9 +4,6 @@ buildscript {
             url "https://plugins.gradle.org/m2/"
         }
     }
-    dependencies {
-        classpath "net.ltgt.gradle:gradle-apt-plugin:0.19"
-    }
 }
 
 buildscript {
@@ -29,7 +26,6 @@ apply plugin: 'java'
 apply plugin: 'application'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
-apply plugin: 'net.ltgt.apt'
 
 group = 'com.licenta.usm'
 version = '0.0.2-SNAPSHOT'
@@ -48,8 +44,8 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation('org.springframework.cloud:spring-cloud-starter-netflix-eureka-client')
     runtimeOnly('org.springframework.boot:spring-boot-devtools')
-    implementation 'org.projectlombok:lombok:1.16.18'
-    apt 'org.projectlombok:lombok:1.16.18'
+    compile 'org.projectlombok:lombok:1.18.6'
+    annotationProcessor 'org.projectlombok:lombok:1.18.6'
     implementation group: 'org.postgresql', name: 'postgresql', version: '42.2.2'
     implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-feign', version: '1.4.6.RELEASE'
 

@@ -1,5 +1,6 @@
 package com.licenta.ath.Security;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -26,13 +27,17 @@ public class UserDetailsServiceImpl implements UserDetailsService  {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
+        List<AppUser> users = new ArrayList<>();
+        userProxy.getAll().getBody().forEach(au -> {
+            var appUser = new AppUser(users.size()+1, au.getNickName(), au.getPassword(), "USER");
+            users.add(appUser);
+        });
+        //encoder.encode("12345");
         // hard coding the users. All passwords must be encoded.
-        final List<AppUser> users = Arrays.asList(
-                new AppUser(1, "omar", encoder.encode("12345"), "USER"),
+        /*final List<AppUser> users = Arrays.asList(
+                new AppUser(1, "luxxxoor", encoder.encode("Parola08"), "USER"),
                 new AppUser(2, "admin", encoder.encode("12345"), "ADMIN")
-        );
-
-        //List<User> asd = userProxy.fi
+        );*/
 
 
         for(AppUser appUser: users) {
