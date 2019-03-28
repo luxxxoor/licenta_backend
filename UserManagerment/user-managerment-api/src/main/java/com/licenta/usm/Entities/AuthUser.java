@@ -9,5 +9,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class AuthUser {
     private String nickName;
-    private String password;
+    private String BCryptedPassword;
 }
