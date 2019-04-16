@@ -20,10 +20,15 @@ public class RegistrationService {
     private EmailProxy emailProxy;
 
     public void register(final RegisterUser registerUser) throws ExistingUserException, EmailAlreadyInUse {
+        if (registerUser.getPassword().length() < 5) {
+            throw
+        }
+
         String encryptedPassword = new BCryptPasswordEncoder().encode(registerUser.getPassword());
 
         final Optional<User> existingUser = userRepository.findByNickName(registerUser.getNickName());
         if (existingUser.isPresent()) {
+            log.info("Already existing user: " + "\"" + existingUser.get().getNickName() + "\"");
             throw new ExistingUserException();
         }
 
