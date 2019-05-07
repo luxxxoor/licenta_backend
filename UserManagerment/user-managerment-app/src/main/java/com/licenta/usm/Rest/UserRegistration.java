@@ -2,7 +2,8 @@ package com.licenta.usm.Rest;
 
 import com.licenta.emm.Exceptions.EmailAlreadyInUse;
 import com.licenta.usm.Entities.RegisterUser;
-import com.licenta.usm.Exceptions.ExistingUserException;
+import com.licenta.usm.Exceptions.AlreadyExistingUserException;
+import com.licenta.usm.Exceptions.PasswordTooShortException;
 import com.licenta.usm.Registration.IUserRegistration;
 import com.licenta.usm.Service.RegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,7 @@ public class UserRegistration implements IUserRegistration {
     }
 
     @Override
-    public ResponseEntity<Void> register(@RequestBody RegisterUser registerUser) throws ExistingUserException, EmailAlreadyInUse {
+    public ResponseEntity<Void> register(@RequestBody RegisterUser registerUser) throws AlreadyExistingUserException, PasswordTooShortException, EmailAlreadyInUse {
         registrationService.register(registerUser);
         return new ResponseEntity<>(OK);
     }

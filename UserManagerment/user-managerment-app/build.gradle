@@ -27,9 +27,9 @@ apply plugin: 'application'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 
-group = 'com.licenta.usm'
-version = '0.0.2-SNAPSHOT'
-sourceCompatibility = 1.8
+group = theGroup
+version = theVersion
+sourceCompatibility = 11
 
 repositories {
     mavenCentral()
@@ -37,7 +37,7 @@ repositories {
 }
 
 dependencies {
-    compile "com.licenta.usm:user-managerment-api:0.0.3-SNAPSHOT"
+    compile "com.licenta.usm:user-managerment-api:${version}"
     implementation('org.springframework.boot:spring-boot-starter-data-jpa')
     implementation('org.springframework.boot:spring-boot-starter-data-rest')
     implementation('org.springframework.boot:spring-boot-starter-web')

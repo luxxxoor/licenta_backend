@@ -20,7 +20,7 @@ public class ManagermentService {
     private UserRepository userRepository;
 
     public User findUser(final int id) throws UserNotFoundException {
-        Optional<User> optionalUser = userRepository.findById(id);
+        final Optional<User> optionalUser = userRepository.findById(id);
         if (optionalUser.isPresent()) {
             return optionalUser.get();
         }
@@ -30,12 +30,12 @@ public class ManagermentService {
     public boolean isNameAvailable(final String nickName) {
         final Optional<User> existingUser = userRepository.findByNickName(nickName);
 
-        return !existingUser.isPresent();
+        return existingUser.isEmpty();
     }
 
     public List<User> findUsersWithPartialName(final String partialName) {
-        final Integer pageNumber = 0;
-        final Integer itemsPerPage = 10;
+        final var pageNumber = 0;
+        final var itemsPerPage = 10;
 
         final Page<User> page =
                 userRepository.findAllByNickNameContainingIgnoreCase(partialName, PageRequest.of(pageNumber, itemsPerPage));
