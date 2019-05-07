@@ -21,8 +21,9 @@ import static org.springframework.http.HttpStatus.*;
 public class ExceptionHandlerController {
     @ExceptionHandler(AlreadyExistingUserException.class)
     public ResponseEntity<Object> handleAlreadyExistingUser(final AlreadyExistingUserException ex, final WebRequest request) {
-        final var error = "There already is an user with the requested name.";
-        return createResponseEntity(FORBIDDEN, ex.getLocalizedMessage(), List.of(error));
+        final String errorSource = ex.getClass().getName();
+        final var errorMessage = "There already is an user with the requested name.";
+        return createResponseEntity(FORBIDDEN, ex.getLocalizedMessage(), List.of(errorSource, errorMessage));
     }
 
     @ExceptionHandler(PasswordTooShortException.class)
@@ -34,8 +35,9 @@ public class ExceptionHandlerController {
 
     @ExceptionHandler(UserNotFoundException.class)
     public ResponseEntity<Object> handleUserNotFound(final UserNotFoundException ex, final WebRequest request) {
-        final var error = "Requested user is not found.";
-        return createResponseEntity(NOT_FOUND, ex.getLocalizedMessage(), List.of(error));
+        final String errorSource = ex.getClass().getName();
+        final var errorMessage = "Requested user is not found.";
+        return createResponseEntity(NOT_FOUND, ex.getLocalizedMessage(), List.of(errorSource, errorMessage));
     }
 
     private ResponseEntity<Object> createResponseEntity(final HttpStatus notFound, final String localizedMessage, final List<String> error) {
