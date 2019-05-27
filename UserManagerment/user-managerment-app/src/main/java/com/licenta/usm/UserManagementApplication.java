@@ -8,9 +8,9 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @EnableEurekaClient
 @SpringBootApplication
 @EnableFeignClients
-public class UserManagermentApplication {
+public class UserManagementApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(UserManagermentApplication.class, args);
+        SpringApplication.run(UserManagementApplication.class, args);
     }
 }

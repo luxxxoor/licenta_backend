@@ -14,9 +14,9 @@ apply plugin: 'idea'
 apply plugin: 'maven-publish'
 apply plugin: 'io.spring.dependency-management'
 
-group = 'com.licenta.usm'
-version = '0.0.3-SNAPSHOT'
-sourceCompatibility = 1.8
+group = theGroup
+version = theVersion
+sourceCompatibility = theSourceCompatibility
 
 repositories {
     mavenCentral()

@@ -1,6 +1,6 @@
 package com.licenta.usm.Configuration;
 
-import com.licenta.usm.Service.ManagermentService;
+import com.licenta.usm.Service.ManagementService;
 import com.licenta.usm.Service.AuthenticationService;
 import com.licenta.usm.Service.RegistrationService;
 import org.springframework.context.annotation.Bean;
@@ -11,8 +11,8 @@ import org.springframework.context.annotation.Import;
 @Import(RepositoryConfiguration.class)
 public class ServiceConfiguration {
     @Bean
-    public ManagermentService managermentService() {
-        return new ManagermentService();
+    public ManagementService managermentService() {
+        return new ManagementService();
     }
 
     @Bean

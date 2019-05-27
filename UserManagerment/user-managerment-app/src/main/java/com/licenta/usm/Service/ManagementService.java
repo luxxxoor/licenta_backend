@@ -15,7 +15,7 @@ import java.util.Optional;
 import static java.util.stream.Collectors.toList;
 
 @Slf4j
-public class ManagermentService {
+public class ManagementService {
     @Autowired
     private UserRepository userRepository;
 

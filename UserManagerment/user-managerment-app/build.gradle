@@ -29,7 +29,7 @@ apply plugin: 'io.spring.dependency-management'
 
 group = theGroup
 version = theVersion
-sourceCompatibility = 11
+sourceCompatibility = theSourceCompatibility
 
 repositories {
     mavenCentral()

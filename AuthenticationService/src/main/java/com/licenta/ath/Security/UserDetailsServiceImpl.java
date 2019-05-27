@@ -5,6 +5,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.licenta.ath.Feign.UserProxy;
+import com.licenta.usm.Entities.AuthUser;
+import com.licenta.usm.Exceptions.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -22,53 +24,36 @@ public class UserDetailsServiceImpl implements UserDetailsService  {
     private UserProxy userProxy;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
 
-        List<AppUser> users = new ArrayList<>();
-        userProxy.getAll().getBody().forEach(au -> {
-            var appUser = new AppUser(users.size()+1, au.getNickName(), au.getBCryptedPassword(), "USER");
-            users.add(appUser);
-        });
+        AuthUser authUser;
+        try {
+            authUser = userProxy.getUser(username).getBody();
+            var appUser = new AppUser(authUser.getNickName(), authUser.getBcryptedPassword(), "USER");
+            List<GrantedAuthority> grantedAuthorities = AuthorityUtils
+                    .commaSeparatedStringToAuthorityList("ROLE_" + "USER"); /*ADMIN*/
 
-
-        for(AppUser appUser: users) {
-            if(appUser.getUsername().equals(username)) {
-
-                List<GrantedAuthority> grantedAuthorities = AuthorityUtils
-                        .commaSeparatedStringToAuthorityList("ROLE_" + "USER"); /*ADMIN*/
-
-                return new User(appUser.getUsername(), appUser.getPassword(), grantedAuthorities);
-            }
+            return new User(appUser.getUsername(), appUser.getPassword(), grantedAuthorities);
+        } catch (UserNotFoundException e) {
+            throw new UsernameNotFoundException("Username: " + username + " not found");
         }
-
-        throw new UsernameNotFoundException("Username: " + username + " not found");
     }
 
     private static class AppUser {
-        private Integer id;
         private String username, password;
         private String role;
 
-        public AppUser(Integer id, String username, String password, String role) {
-            this.id = id;
+        public AppUser(final String username, final String password, final String role) {
             this.username = username;
             this.password = password;
             this.role = role;
-        }
-
-        public Integer getId() {
-            return id;
-        }
-
-        public void setId(Integer id) {
-            this.id = id;
         }
 
         public String getUsername() {
             return username;
         }
 
-        public void setUsername(String username) {
+        public void setUsername(final String username) {
             this.username = username;
         }
 
@@ -76,7 +61,7 @@ public class UserDetailsServiceImpl implements UserDetailsService  {
             return password;
         }
 
-        public void setPassword(String password) {
+        public void setPassword(final String password) {
             this.password = password;
         }
         public String getRole() {
