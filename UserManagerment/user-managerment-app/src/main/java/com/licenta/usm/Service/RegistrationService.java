@@ -25,7 +25,7 @@ public class RegistrationService {
             throw new PasswordTooShortException("Provided password has only " + registerUser.getPassword().length() + " charactes");
         }
 
-        String encryptedPassword = new BCryptPasswordEncoder().encode(registerUser.getPassword());
+        final String encryptedPassword = new BCryptPasswordEncoder().encode(registerUser.getPassword());
 
         final Optional<User> existingUser = userRepository.findByNickName(registerUser.getNickName());
         if (existingUser.isPresent()) {

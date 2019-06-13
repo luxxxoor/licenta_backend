@@ -23,7 +23,7 @@ public class AuthenticationService {
     public List<AuthUser> findAllUsers() {
         List<AuthUser> users = userRepository.findAll()
                                                 .stream()
-                                                .map( u -> new AuthUser(u.getNickName(), u.getPassword()))
+                                                .map( u -> new AuthUser(u.getNickName(), u.getEncryptedPassword()))
                                                 .collect(Collectors.toList());
         log.info("findAllUsers (" + users.size() + " users)");
         return users;
@@ -32,7 +32,7 @@ public class AuthenticationService {
     public AuthUser findUserByNickName(final String nickName) throws UserNotFoundException {
         Optional<User> optionalUser = userRepository.findByNickName(nickName);
         if (optionalUser.isPresent()) {
-            var authUser = new AuthUser(optionalUser.get().getNickName(), optionalUser.get().getPassword());
+            var authUser = new AuthUser(optionalUser.get().getNickName(), optionalUser.get().getEncryptedPassword());
             return authUser;
         } else {
             throw new UserNotFoundException();
