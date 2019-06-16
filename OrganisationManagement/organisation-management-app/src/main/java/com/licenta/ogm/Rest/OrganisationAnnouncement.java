@@ -8,6 +8,7 @@ import com.licenta.ogm.Service.AnnouncementsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -43,7 +44,7 @@ public class OrganisationAnnouncement implements IOrganisationAnnouncement {
 
     @Override
     public ResponseEntity<List<Announcement>> getLastAnnouncementForUserId(
-            @RequestParam("userId") final Integer userId) {
+            @RequestHeader("userId") final Integer userId) {
         final List<Announcement> announcements = announcementsService.getLastAnnouncementForUserId(userId);
         return new ResponseEntity<>(announcements, OK);
     }

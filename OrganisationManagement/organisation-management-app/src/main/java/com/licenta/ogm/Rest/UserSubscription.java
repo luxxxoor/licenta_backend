@@ -7,6 +7,7 @@ import com.licenta.ogm.Service.UserSubscriptionService;
 import com.licenta.ogm.UserSubscription.IUserSubscription;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,7 +23,7 @@ public class UserSubscription implements IUserSubscription {
     }
 
     @Override
-    public ResponseEntity<Void> subscribe(@RequestParam("userId") final Integer userId,
+    public ResponseEntity<Void> subscribe(@RequestHeader("userId") final Integer userId,
                                           @RequestParam("organisationId") final Integer organisationId)
             throws OrganisationNotFoundException, AlreadyExistingSubscriptionException {
         userSubscriptionService.subscribe(userId, organisationId);
@@ -30,7 +31,7 @@ public class UserSubscription implements IUserSubscription {
     }
 
     @Override
-    public ResponseEntity<Void> unsubscribe(@RequestParam("userId") final Integer userId,
+    public ResponseEntity<Void> unsubscribe(@RequestHeader("userId") final Integer userId,
                                             @RequestParam("organisationId") final Integer organisationId)
             throws SubscriptionNotFoundException {
         userSubscriptionService.unsubscribe(userId, organisationId);

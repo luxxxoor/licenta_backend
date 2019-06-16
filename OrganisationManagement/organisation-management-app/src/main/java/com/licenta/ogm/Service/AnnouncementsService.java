@@ -47,7 +47,7 @@ public class AnnouncementsService {
 
         final var organisationORM = optionalOrganisationORM.get();
 
-        if (!bCryptPasswordEncoder.matches(password, organisationORM.getEncryptedPassword())){
+        if (!bCryptPasswordEncoder.matches(password, organisationORM.getEncryptedPassword())) {
             throw new InvalidPasswordException("Password does not match.");
         }
 

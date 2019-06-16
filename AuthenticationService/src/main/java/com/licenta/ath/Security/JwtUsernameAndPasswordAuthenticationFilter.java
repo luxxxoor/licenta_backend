@@ -11,6 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.licenta.agw.Security.JwtConfig;
+import com.licenta.ath.Feign.UserProxy;
+import com.licenta.usm.Entities.AuthUser;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -31,9 +34,12 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
 
     private final JwtConfig jwtConfig;
 
-    public JwtUsernameAndPasswordAuthenticationFilter(AuthenticationManager authManager, JwtConfig jwtConfig) {
+    private final UserProxy userProxy;
+
+    public JwtUsernameAndPasswordAuthenticationFilter(AuthenticationManager authManager, JwtConfig jwtConfig, UserProxy userProxy) {
         this.authManager = authManager;
         this.jwtConfig = jwtConfig;
+        this.userProxy = userProxy;
 
         // By default, UsernamePasswordAuthenticationFilter listens to "/login" path.
         // In our case, we use "/auth". So, we need to override the defaults.
@@ -60,13 +66,11 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
             throw new RuntimeException(e);
         }
     }
-
     // Upon successful authentication, generate a token.
     // The 'auth' passed to successfulAuthentication() is the current authenticated user.
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
                                             Authentication auth) throws IOException, ServletException {
-
         Long now = System.currentTimeMillis();
         String token = Jwts.builder()
                 .setSubject(auth.getName())
@@ -81,6 +85,20 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
 
         // Add token to header
         response.addHeader(jwtConfig.getHeader(), jwtConfig.getPrefix() + token);
+        try {
+            final AuthUser authUser = userProxy.getUser(auth.getName()).getBody();
+            if (authUser != null) {
+                response.addHeader("userId", authUser.getId().toString());
+            }
+        }
+        catch (Exception ignored) {
+        }
+
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        response.getWriter().write(
+                "{\"" + jwtConfig.getHeader() + "\":\"" + jwtConfig.getPrefix() + token + "\"}"
+        );
     }
 
     // A (temporary) class just to represent the user credentials

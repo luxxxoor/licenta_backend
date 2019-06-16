@@ -8,8 +8,6 @@ import com.licenta.usm.Repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -22,20 +20,21 @@ public class AuthenticationService {
 
     public List<AuthUser> findAllUsers() {
         List<AuthUser> users = userRepository.findAll()
-                                                .stream()
-                                                .map( u -> new AuthUser(u.getNickName(), u.getEncryptedPassword()))
-                                                .collect(Collectors.toList());
+                .stream()
+                .map(u -> new AuthUser(u.getId(), u.getNickName(), u.getEncryptedPassword()))
+                .collect(Collectors.toList());
         log.info("findAllUsers (" + users.size() + " users)");
         return users;
     }
 
     public AuthUser findUserByNickName(final String nickName) throws UserNotFoundException {
         Optional<User> optionalUser = userRepository.findByNickName(nickName);
-        if (optionalUser.isPresent()) {
-            var authUser = new AuthUser(optionalUser.get().getNickName(), optionalUser.get().getEncryptedPassword());
-            return authUser;
-        } else {
+        if (optionalUser.isEmpty()) {
             throw new UserNotFoundException();
         }
+
+        var user = optionalUser.get();
+        var authUser = new AuthUser(user.getId(), user.getNickName(), user.getEncryptedPassword());
+        return authUser;
     }
 }

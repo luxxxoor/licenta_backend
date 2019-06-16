@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AuthUser {
+    private Integer id;
     private String nickName;
     private String bcryptedPassword;
 }

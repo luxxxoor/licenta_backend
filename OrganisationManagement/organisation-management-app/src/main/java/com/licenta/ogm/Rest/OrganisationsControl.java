@@ -5,7 +5,7 @@ import com.licenta.ogm.Organisation.IOrganisations;
 import com.licenta.ogm.Service.OrganisationsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -22,7 +22,7 @@ public class OrganisationsControl implements IOrganisations {
     }
 
     @Override
-    public ResponseEntity<List<Organisation>> getOrganisationsForUserId(@RequestParam("userId") final Integer userId) {
+    public ResponseEntity<List<Organisation>> getOrganisationsForUserId(@RequestHeader("userId") final Integer userId) {
         final List<Organisation> organisations = organisationsService.findOrganisationsForUserId(userId);
         return new ResponseEntity<>(organisations, OK);
     }
