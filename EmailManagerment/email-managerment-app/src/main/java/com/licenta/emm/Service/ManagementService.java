@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Optional;
 
-public class ManagermentService {
+public class ManagementService {
     @Autowired
     private EmailRepository emailRepository;
     @Autowired
@@ -34,7 +34,7 @@ public class ManagermentService {
     private boolean isEmailAvailable(final String email) {
         final Optional<Email> existingEmail = emailRepository.findByEmail(email);
 
-        return !existingEmail.isPresent();
+        return existingEmail.isEmpty();
     }
 
     private void sendConfirmationLink(final Email email) throws EmailNotSent {

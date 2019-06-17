@@ -32,7 +32,7 @@ publishing {
 }
 
 dependencies {
-    compile "com.licenta.emm:email-managerment-api:0.0.2-SNAPSHOT"
+    compile "com.licenta.emm:email-managerment-api:${emmVersion}"
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '2.1.5.RELEASE'
 
     compile 'org.projectlombok:lombok:1.18.6'

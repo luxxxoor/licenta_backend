@@ -49,6 +49,9 @@ dependencies {
     compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-netflix-zuul', version: '2.1.0.RELEASE'
     compile('javax.xml.bind:jaxb-api:2.3.0')
     testImplementation('org.springframework.boot:spring-boot-starter-test')
+
+    // https://mvnrepository.com/artifact/junit/junit
+    compile group: 'junit', name: 'junit', version: '4.4'
 }
 
 dependencyManagement {

@@ -1,9 +1,9 @@
-package com.licenta.emm.Managerment.Constants;
+package com.licenta.emm.Management.Constants;
 
-final public class EmailManagermentConstants {
+final public class EmailManagementConstants {
     private static final String NAME = "/email/";
     private static final String VERSION = "v1";
     public static final String PATH = NAME + VERSION;
 
-    private EmailManagermentConstants(){}
+    private EmailManagementConstants(){}
 }

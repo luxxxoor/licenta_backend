@@ -8,7 +8,7 @@ buildscript {
 
 buildscript {
     ext {
-        springBootVersion = '2.0.5.RELEASE'
+        springBootVersion = '2.1.5.RELEASE'
     }
     repositories {
         mavenCentral()
@@ -19,7 +19,7 @@ buildscript {
 }
 
 ext {
-    springCloudVersion = 'Finchley.SR2'
+    springCloudVersion = 'Greenwich.SR1'
 }
 
 apply plugin: 'java'
@@ -39,7 +39,6 @@ repositories {
 
 dependencies {
     compile "com.licenta.emm:email-managerment-api:${version}"
-    compile "com.licenta.usm:user-managerment-api:${usmVersion}"
     implementation('org.springframework.boot:spring-boot-starter-data-jpa')
     implementation('org.springframework.boot:spring-boot-starter-data-rest')
     implementation('org.springframework.boot:spring-boot-starter-web')

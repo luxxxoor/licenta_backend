@@ -1,8 +1,8 @@
 package com.licenta.usm.Feign;
 
-import com.licenta.emm.Managerment.IEmailManagerment;
+import com.licenta.emm.Management.IEmailManagement;
 import org.springframework.cloud.openfeign.FeignClient;
 
-@FeignClient(value = "EMAIL-MANAGERMENT")
-public interface EmailProxy extends IEmailManagerment {
+@FeignClient(value = "EMAIL-MANAGEMENT")
+public interface EmailProxy extends IEmailManagement {
 }
