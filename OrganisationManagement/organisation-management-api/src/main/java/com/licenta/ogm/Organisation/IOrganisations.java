@@ -14,6 +14,6 @@ public interface IOrganisations {
     @RequestMapping(value = PATH + "/getByUserId", method = GET)
     ResponseEntity<List<Organisation>> getOrganisationsForUserId(@RequestHeader("userId") final Integer userId);
 
-    @RequestMapping(value = PATH + "/getAll", method = GET)
-    ResponseEntity<List<Organisation>> getAll();
+    @RequestMapping(value = PATH + "/getAllSortedByPopularity", method = GET)
+    ResponseEntity<List<Organisation>> getAllSortedByPopularity(@RequestHeader("userId") final Integer userId);
 }

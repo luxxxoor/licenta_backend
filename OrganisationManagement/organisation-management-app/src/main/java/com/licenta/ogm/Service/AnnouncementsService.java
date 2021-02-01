@@ -12,6 +12,7 @@ import com.licenta.ogm.Repository.SubscriptionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import javax.transaction.Transactional;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Comparator;
@@ -60,6 +61,7 @@ public class AnnouncementsService {
         announcementRepository.save(announcementORM);
     }
 
+    @Transactional
     public List<Announcement> getAnnouncementForOrganisationId(final Integer organisationId)
             throws OrganisationNotFoundException {
         final Optional<OrganisationORM> optionalOrganisationORM = organisationRepository.findById(organisationId);
@@ -78,6 +80,7 @@ public class AnnouncementsService {
         return announcements;
     }
 
+    @Transactional
     public List<Announcement> getLastAnnouncementForUserId(final Integer userId) {
         final List<SubscriptionORM> subscriptionORMList = subscriptionRepository.findAllByUserId(userId);
         final List<OrganisationORM> organisationORMList =

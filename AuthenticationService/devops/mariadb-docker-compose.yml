@@ -1,0 +1,27 @@
+#docker-compose -f devops/mariadb-docker-compose.yml up
+version: '2.3'
+
+services:
+  mariadb:
+    restart: always
+    image: mariadb:10.5
+    container_name: mariadb
+    ports:
+      - "3307:3306"
+    volumes:
+      - ./volumes/mariadb/store/:/var/lib/mysql
+    mem_limit: 512m
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=ATH
+      - MYSQL_USER=local
+      - MYSQL_PASSWORD=root
+      - PMA_ARBITRARY=1
+      - PMA_HOST=mysql
+      - PMA_PORT=3306
+      - PMA_USER=root
+      - PMA_PASSWORD=root
+
+volumes:
+  mariadb:
+    driver: local

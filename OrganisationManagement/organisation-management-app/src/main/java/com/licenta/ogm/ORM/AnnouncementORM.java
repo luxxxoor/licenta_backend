@@ -17,6 +17,7 @@ public class AnnouncementORM {
     private String title;
     @Column
     private String imageUrl;
+    @Lob
     @Column
     private String description;
     @Column

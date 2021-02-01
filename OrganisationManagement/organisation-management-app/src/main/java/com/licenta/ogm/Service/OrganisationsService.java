@@ -7,6 +7,7 @@ import com.licenta.ogm.Repository.OrganisationRepository;
 import com.licenta.ogm.Repository.SubscriptionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,10 +22,12 @@ public class OrganisationsService {
         this.subscriptionRepository = subscriptionRepository;
     }
 
-    public List<Organisation> getAll() {
+    public List<Organisation> getAllSortedByPopularity(final Integer userId) {
         List<Organisation> organisations = organisationRepository.findAll()
                 .stream()
-                .map(o -> new Organisation(o.getId(), o.getName()))
+                .map(o -> new Organisation(o.getId(), o.getName(),
+                        subscriptionRepository.findByUserIdAndOrganisation_Id(userId, o.getId()).isPresent()))
+                .sorted(Comparator.comparing(o -> subscriptionRepository.countAllByOrganisation_Id(o.getId())))
                 .collect(Collectors.toList());
         return organisations;
     }
@@ -34,7 +37,7 @@ public class OrganisationsService {
         final List<OrganisationORM> organisationORMList =
                 subscriptions.stream().map(SubscriptionORM::getOrganisation).collect(Collectors.toList());
         final List<Organisation> organisations = organisationORMList.stream()
-                .map(o -> new Organisation(o.getId(), o.getName())).collect(Collectors.toList());
+                .map(o -> new Organisation(o.getId(), o.getName(), true)).collect(Collectors.toList());
         return organisations;
     }
 }

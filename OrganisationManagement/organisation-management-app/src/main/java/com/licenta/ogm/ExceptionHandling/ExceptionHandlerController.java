@@ -1,8 +1,6 @@
 package com.licenta.ogm.ExceptionHandling;
 
-import com.licenta.ogm.Exceptions.AlreadyExistingOrganisationException;
-import com.licenta.ogm.Exceptions.InvalidPasswordException;
-import com.licenta.ogm.Exceptions.OrganisationNotFoundException;
+import com.licenta.ogm.Exceptions.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -37,6 +35,27 @@ public class ExceptionHandlerController {
     public ResponseEntity<Object> handleUserNotFound(final OrganisationNotFoundException ex, final WebRequest request) {
         final String errorSource = ex.getClass().getName();
         final var errorMessage = "Requested organisation is not found.";
+        return createResponseEntity(NOT_FOUND, ex.getLocalizedMessage(), List.of(errorSource, errorMessage));
+    }
+
+    @ExceptionHandler(AlreadyExistingSubscriptionException.class)
+    public ResponseEntity<Object> handleAlreadyExistingSubscription(final AlreadyExistingSubscriptionException ex, final WebRequest request) {
+        final String errorSource = ex.getClass().getName();
+        final var errorMessage = "Subscription already exists.";
+        return createResponseEntity(FORBIDDEN, ex.getLocalizedMessage(), List.of(errorSource, errorMessage));
+    }
+
+    @ExceptionHandler(SubscriptionNotFoundException.class)
+    public ResponseEntity<Object> handleSubscriptionNotFound(final SubscriptionNotFoundException ex, final WebRequest request) {
+        final String errorSource = ex.getClass().getName();
+        final var errorMessage = "Requested organisation is not found.";
+        return createResponseEntity(NOT_FOUND, ex.getLocalizedMessage(), List.of(errorSource, errorMessage));
+    }
+
+    @ExceptionHandler(AnnouncementNotFoundException.class)
+    public ResponseEntity<Object> handleAnnouncementNotFound(final AnnouncementNotFoundException ex, final WebRequest request) {
+        final String errorSource = ex.getClass().getName();
+        final var errorMessage = "Requested annoucement is not found.";
         return createResponseEntity(NOT_FOUND, ex.getLocalizedMessage(), List.of(errorSource, errorMessage));
     }
 

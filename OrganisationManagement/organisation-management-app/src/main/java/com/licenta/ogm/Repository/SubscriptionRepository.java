@@ -10,4 +10,6 @@ public interface SubscriptionRepository extends JpaRepository<SubscriptionORM, I
     List<SubscriptionORM> findAllByUserId(final Integer userId);
 
     Optional<SubscriptionORM> findByUserIdAndOrganisation_Id(final Integer userId, final Integer organisationId);
+
+    Integer countAllByOrganisation_Id(final Integer organisationId);
 }

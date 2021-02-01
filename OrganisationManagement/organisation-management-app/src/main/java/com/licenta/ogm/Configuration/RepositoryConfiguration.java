@@ -1,6 +1,7 @@
 package com.licenta.ogm.Configuration;
 
 import com.licenta.ogm.Repository.AnnouncementRepository;
+import com.licenta.ogm.Repository.CommentRepository;
 import com.licenta.ogm.Repository.OrganisationRepository;
 import com.licenta.ogm.Repository.SubscriptionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,4 +17,7 @@ public class RepositoryConfiguration {
 
     @Autowired
     public AnnouncementRepository announcementRepository;
+
+    @Autowired
+    public CommentRepository commentRepository;
 }

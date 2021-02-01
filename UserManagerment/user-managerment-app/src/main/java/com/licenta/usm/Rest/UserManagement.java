@@ -1,6 +1,7 @@
 package com.licenta.usm.Rest;
 
 import com.licenta.usm.Entities.UserPublicDetails;
+import com.licenta.usm.Entities.UserVo;
 import com.licenta.usm.Exceptions.UserNotFoundException;
 import com.licenta.usm.Management.IUserManagement;
 import com.licenta.usm.ORM.User;
@@ -26,16 +27,23 @@ public class UserManagement implements IUserManagement {
     }
 
     @Override
+    public ResponseEntity<UserVo> findUsersByPhone(@RequestParam final String phoneNumber) throws UserNotFoundException {
+        final User user = managementService.findUserByPhoneNumber(phoneNumber);
+        final var userVo = new UserVo(Long.valueOf(user.getId()), user.getPhoneNumber(), user.getName());
+        return new ResponseEntity<>(userVo, OK);
+    }
+
+    @Override
     public ResponseEntity<List<UserPublicDetails>> findUsersByName(@RequestParam final String nickName) {
         final List<User> users = managementService.findUsersWithPartialName(nickName);
-        final List<UserPublicDetails> userPublicDetailsList = users.stream().map(u -> new UserPublicDetails(u.getId(), u.getNickName())).collect(Collectors.toList());
+        final List<UserPublicDetails> userPublicDetailsList = users.stream().map(u -> new UserPublicDetails(u.getId(), u.getName())).collect(Collectors.toList());
         return new ResponseEntity<>(userPublicDetailsList, OK);
     }
 
     @Override
     public ResponseEntity<UserPublicDetails> findNameById(@RequestParam final Integer id) throws UserNotFoundException {
         final User user = managementService.findUser(id);
-        final var userPublicDetails = new UserPublicDetails(user.getId(), user.getNickName());
+        final var userPublicDetails = new UserPublicDetails(user.getId(), user.getName());
         return new ResponseEntity<>(userPublicDetails, OK);
     }
 

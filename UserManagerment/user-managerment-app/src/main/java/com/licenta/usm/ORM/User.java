@@ -7,23 +7,23 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "\"user\"")
+@Table(name = "\"USERS\"")
 @Data
 @NoArgsConstructor
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @Column
-    private String nickName;
-    @Column
-    private String encryptedPassword;
-    @Column
+    @Column(name = "NAME", nullable = false)
+    private String name;
+    @Column(name = "PHONE_NUMBER", unique = true, nullable = false)
+    private String phoneNumber;
+    @Column(name = "EMAIL", unique = true, nullable = false)
     private String email;
 
-    public User(final String nickName, final String encryptedPassword, final String email) {
-        this.nickName = nickName;
-        this.encryptedPassword = encryptedPassword;
+    public User(final String name, final String phoneNumber, final String email) {
+        this.name = name;
+        this.phoneNumber = phoneNumber;
         this.email = email;
     }
 }

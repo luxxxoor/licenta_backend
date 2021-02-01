@@ -28,8 +28,8 @@ public class OrganisationsControl implements IOrganisations {
     }
 
     @Override
-    public ResponseEntity<List<Organisation>> getAll() {
-        final List<Organisation> organisations = organisationsService.getAll();
+    public ResponseEntity<List<Organisation>> getAllSortedByPopularity(@RequestHeader("userId") final Integer userId) {
+        final List<Organisation> organisations = organisationsService.getAllSortedByPopularity(userId);
         return new ResponseEntity<>(organisations, OK);
     }
 }

@@ -21,20 +21,20 @@ public class AuthenticationService {
     public List<AuthUser> findAllUsers() {
         List<AuthUser> users = userRepository.findAll()
                 .stream()
-                .map(u -> new AuthUser(u.getId(), u.getNickName(), u.getEncryptedPassword()))
+                .map(u -> new AuthUser(u.getId(), u.getName(), ""))
                 .collect(Collectors.toList());
         log.info("findAllUsers (" + users.size() + " users)");
         return users;
     }
 
     public AuthUser findUserByNickName(final String nickName) throws UserNotFoundException {
-        Optional<User> optionalUser = userRepository.findByNickName(nickName);
+        Optional<User> optionalUser = userRepository.findByName(nickName);
         if (optionalUser.isEmpty()) {
             throw new UserNotFoundException();
         }
 
         var user = optionalUser.get();
-        var authUser = new AuthUser(user.getId(), user.getNickName(), user.getEncryptedPassword());
+        var authUser = new AuthUser(user.getId(), user.getName(), "");
         return authUser;
     }
 }

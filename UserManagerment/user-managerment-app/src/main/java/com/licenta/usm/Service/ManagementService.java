@@ -19,6 +19,14 @@ public class ManagementService {
     @Autowired
     private UserRepository userRepository;
 
+    public User findUserByPhoneNumber(final String phoneNumber) throws UserNotFoundException {
+        final Optional<User> optionalUser = userRepository.findByPhoneNumber(phoneNumber);
+        if (optionalUser.isPresent()) {
+            return optionalUser.get();
+        }
+        throw new UserNotFoundException();
+    }
+
     public User findUser(final int id) throws UserNotFoundException {
         final Optional<User> optionalUser = userRepository.findById(id);
         if (optionalUser.isPresent()) {
@@ -28,7 +36,7 @@ public class ManagementService {
     }
 
     public boolean isNameAvailable(final String nickName) {
-        final Optional<User> existingUser = userRepository.findByNickName(nickName);
+        final Optional<User> existingUser = userRepository.findByName(nickName);
 
         return existingUser.isEmpty();
     }
@@ -38,7 +46,7 @@ public class ManagementService {
         final var itemsPerPage = 10;
 
         final Page<User> page =
-                userRepository.findAllByNickNameContainingIgnoreCase(partialName, PageRequest.of(pageNumber, itemsPerPage));
+                userRepository.findAllByNameContainingIgnoreCase(partialName, PageRequest.of(pageNumber, itemsPerPage));
 
         log.info("Find users with partial name for: \"" + partialName + "\"");
         log.info("Found " + page.stream().count() + " matches");
