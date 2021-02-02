@@ -1,0 +1,60 @@
+version: '2.3'
+
+services:
+  registry:
+    image: registryserver
+    ports:
+     - "8600:8600"
+  api:
+    image: apigateway
+    ports:
+     - "8604:8604"
+    links:
+     - registry
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://registry:8600/eureka
+  usr:
+    image: userservice
+    ports:
+     - "8602:8602"
+    links:
+     - registry
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://registry:8600/eureka
+  auth:
+    image: authservice
+    ports:
+     - "8605:8605"
+    links:
+     - registry
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://registry:8600/eureka
+  org:
+    image: orgservice
+    ports:
+     - "8606:8606"
+    links:
+     - registry
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://registry:8600/eureka
+  mariadb:
+    restart: always
+    image: mariadb:10.5
+    command: --default-authentication-plugin=mysql_native_password
+    container_name: mariadb
+    ports:
+      - "3307:3306"
+    volumes:
+      - ./volumes/mariadb/store/:/var/lib/mysql
+    mem_limit: 512m
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=USM
+      - MYSQL_USER=local
+      - MYSQL_PASSWORD=root
+      - PMA_ARBITRARY=1
+      - PMA_HOST=mysql
+      - PMA_PORT=3306
+      - PMA_USER=root
+      - PMA_PASSWORD=root
+

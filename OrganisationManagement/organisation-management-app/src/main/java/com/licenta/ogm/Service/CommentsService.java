@@ -1,6 +1,5 @@
 package com.licenta.ogm.Service;
 
-import com.licenta.ogm.Entities.Announcement;
 import com.licenta.ogm.Entities.Comment;
 import com.licenta.ogm.Exceptions.AnnouncementNotFoundException;
 import com.licenta.ogm.Feign.UserProxy;
